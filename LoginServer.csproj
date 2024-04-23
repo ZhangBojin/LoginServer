@@ -9,8 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Consul" Version="1.7.14.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.152" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="xunit" Version="2.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
