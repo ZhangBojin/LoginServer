@@ -1,4 +1,5 @@
 using LoginServer.Middleware.Consul;
+using LoginServer.Middleware.Jwt;
 using SqlSugar;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,13 +21,15 @@ builder.Services.AddSingleton<ISqlSugarClient>(s =>
     return sqlSugarScope;
 });
 
+builder.Services.AddSingleton<JwtHelper>();
+
 var app = builder.Build();
 
 var task = app.Services.GetRequiredService<ConsulCenter>().ServiceRegistry();
 
 //app.Services.GetRequiredService<ISqlSugarClient>().DbFirst.IsCreateAttribute().CreateClassFile("E:\\Csharp\\LoginServer\\Models", "Models");
-
-
+var token= app.Services.GetRequiredService<JwtHelper>().GenerateJwtToken("zbj123");
+var istoken = app.Services.GetRequiredService<JwtHelper>().ValidateJwtToken(token,"zbj123");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
