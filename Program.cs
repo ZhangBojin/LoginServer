@@ -1,5 +1,6 @@
 using LoginServer.Middleware.Consul;
 using LoginServer.Middleware.Jwt;
+using Models;
 using SqlSugar;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,13 +33,15 @@ var task = app.Services.GetRequiredService<ConsulCenter>().ServiceRegistry();
 //Map()、MapWhen()管道中增加分支，条件匹配就走分支，且不切换回主分支
 //MapWhen()：按条件执行，MapWhen比Map处理范围更广
 //UseWhen()：按条件执行，与MapWhen不同的是，UseWhen执行完后切回主分支!
-app.UseWhen(context => context.Request.Path.StartsWithSegments("/Main")
-    , builder =>
+app.UseWhen(context => context.Request.Path.StartsWithSegments("/Main/TestJwt")
+    , applicationBuilder =>
     {
-        builder.UseMiddleware<JwtMiddleware>();
+        applicationBuilder.UseMiddleware<JwtMiddleware>();
     });
 
 #region MyRegion
+//var count = app.Services.GetRequiredService<ISqlSugarClient>().Queryable<userinfo>().Count();
+//Console.Write("");
 //app.Services.GetRequiredService<ISqlSugarClient>().DbFirst.IsCreateAttribute().CreateClassFile("E:\\Csharp\\LoginServer\\Models", "Models");
 //var token= app.Services.GetRequiredService<JwtHelper>().GenerateJwtToken("zbj123");
 //var istoken = app.Services.GetRequiredService<JwtHelper>().ValidateJwtToken(token,"zbj123");

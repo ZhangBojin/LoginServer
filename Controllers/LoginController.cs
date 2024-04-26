@@ -1,32 +1,39 @@
 ﻿using LoginServer.Middleware.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using LoginServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using SqlSugar;
 
 namespace LoginServer.Controllers
 {
-    [Route("Main/[controller]")]
+    [Route("Main/[action]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginController(JwtHelper jwtHelper, ISqlSugarClient dbClient) : ControllerBase
     {
-        private JwtHelper jwtHelper;
-
-        public LoginController(JwtHelper jwtHelper)
-        {
-            this.jwtHelper = jwtHelper;
-        }
+        private readonly JwtHelper jwtHelper = jwtHelper;
+        private readonly ISqlSugarClient dbClient = dbClient;
 
         [HttpPost]
-        public IActionResult gettoken(string id)
+        public ActionResult LoginAction(LoginInfo lgInfo)
         {
-            return Ok(jwtHelper.GenerateJwtToken(id));
+            try
+            {
+                var count= dbClient.Queryable<userinfo>().Where(u => u.phone == lgInfo.Account && u.pwd == lgInfo.Password).Count();
+                if (count <= 0) return StatusCode(401, "未有此账号或密码错误！");
+                var token = jwtHelper.GenerateJwtToken(lgInfo.Account.ToString());
+                return Ok(token);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "服务器内部错误");
+            }
         }
 
-        [Authorize]
         [HttpGet]
-        public IActionResult LoginAction()
+        public ActionResult TestJwt()
         {
-            return Ok();
+            return StatusCode(200,"成功");
         }
     }
 }

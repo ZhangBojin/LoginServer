@@ -2,4 +2,4 @@
 
 微服务初步学习中...
 目前使用：
-        consul、sqlsugar
+        consul、sqlsugar、jwt中间件管道
