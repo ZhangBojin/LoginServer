@@ -3,16 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LoginServer.Middleware.Jwt
 {
-    public class JwtMiddleware
+    public class JwtMiddleware(RequestDelegate next, JwtHelper jwtHelper)
     {
-        private readonly RequestDelegate next;
-        private JwtHelper jwtHelper;
-
-        public JwtMiddleware(RequestDelegate next, JwtHelper jwtHelper)
-        {
-            this.next = next;
-            this.jwtHelper = jwtHelper;
-        }
+        private readonly RequestDelegate next = next;
+        private JwtHelper jwtHelper = jwtHelper;
 
         public async Task Invoke(HttpContext context)
         {
