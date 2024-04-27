@@ -1,6 +1,5 @@
 using LoginServer.Middleware.Consul;
 using LoginServer.Middleware.Jwt;
-using Models;
 using SqlSugar;
 
 var builder = WebApplication.CreateBuilder(args);

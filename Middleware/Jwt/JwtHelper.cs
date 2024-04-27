@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Xunit;
 
 namespace LoginServer.Middleware.Jwt
 {

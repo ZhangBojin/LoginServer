@@ -1,7 +1,4 @@
-﻿using Consul;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LoginServer.Middleware.Jwt
+﻿namespace LoginServer.Middleware.Jwt
 {
     public class JwtMiddleware(RequestDelegate next, JwtHelper jwtHelper)
     {
