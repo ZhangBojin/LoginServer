@@ -8,6 +8,7 @@
         public async Task Invoke(HttpContext context)
         {
             var id = context.Request.Headers.Cookie.ToString();
+            var a=context.Connection.RemoteIpAddress;
             var authorization = context.Request.Headers.Authorization.ToString();
             if (jwtHelper.ValidateJwtToken(authorization, id))
             {

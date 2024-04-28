@@ -1,18 +1,18 @@
-﻿using LoginServer.Middleware.Jwt;
+﻿using System.Text;
+using LoginServer.Middleware.Jwt;
 using LoginServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Models;
+using Newtonsoft.Json.Linq;
 using SqlSugar;
 
 namespace LoginServer.Controllers
 {
     [Route("Main/[action]")]
     [ApiController]
-    public class LoginController(JwtHelper jwtHelper, ISqlSugarClient dbClient) : ControllerBase
+    public class LoginController(JwtHelper jwtHelper, ISqlSugarClient dbClient,IDistributedCache cache) : ControllerBase
     {
-        private readonly JwtHelper jwtHelper = jwtHelper;
-        private readonly ISqlSugarClient dbClient = dbClient;
-
         [HttpPost]
         public ActionResult LoginAction(LoginInfo lgInfo)
         {
@@ -31,9 +31,16 @@ namespace LoginServer.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestJwt()
+        private ActionResult TestJwt()
         {
             return StatusCode(200,"成功");
+        }
+
+        [HttpGet]
+        private  ActionResult CsAsync()
+        {
+            cache.SetString("zbj", "111", new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(10)));
+            return Ok();
         }
     }
 }

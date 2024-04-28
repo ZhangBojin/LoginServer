@@ -1,5 +1,8 @@
+using System.Text;
 using LoginServer.Middleware.Consul;
 using LoginServer.Middleware.Jwt;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
 using SqlSugar;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +25,12 @@ builder.Services.AddSingleton<ISqlSugarClient>(s =>
 });
 
 builder.Services.AddSingleton<JwtHelper>();
+
+builder.Services.AddStackExchangeRedisCache(r =>
+{
+    r.Configuration = builder.Configuration.GetSection("redis:Key").Value;
+});
+
 builder.Services.AddAuthentication();
 
 var app = builder.Build();
@@ -44,6 +53,8 @@ app.UseWhen(context => context.Request.Path.StartsWithSegments("/Main/TestJwt")
 //app.Services.GetRequiredService<ISqlSugarClient>().DbFirst.IsCreateAttribute().CreateClassFile("E:\\Csharp\\LoginServer\\Models", "Models");
 //var token= app.Services.GetRequiredService<JwtHelper>().GenerateJwtToken("zbj123");
 //var istoken = app.Services.GetRequiredService<JwtHelper>().ValidateJwtToken(token,"zbj123");
+//var rz=Encoding.UTF8.GetString(app.Services.GetRequiredService<IDistributedCache>().Get("zbj")!);
+//Console.Write("");
 #endregion
 
 if (app.Environment.IsDevelopment())
