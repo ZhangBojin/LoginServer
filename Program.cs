@@ -1,8 +1,5 @@
-using System.Text;
 using LoginServer.Middleware.Consul;
 using LoginServer.Middleware.Jwt;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
 using SqlSugar;
 
 var builder = WebApplication.CreateBuilder(args);

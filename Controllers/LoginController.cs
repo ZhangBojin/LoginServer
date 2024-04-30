@@ -1,10 +1,8 @@
-﻿using System.Text;
-using LoginServer.Middleware.Jwt;
+﻿using LoginServer.Middleware.Jwt;
 using LoginServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Models;
-using Newtonsoft.Json.Linq;
 using SqlSugar;
 
 namespace LoginServer.Controllers
