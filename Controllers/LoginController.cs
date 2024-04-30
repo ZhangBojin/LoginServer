@@ -35,7 +35,7 @@ namespace LoginServer.Controllers
         }
 
         [HttpGet]
-        private  ActionResult CsAsync()
+        private  ActionResult TestCache()
         {
             cache.SetString("zbj", "111", new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(10)));
             return Ok();

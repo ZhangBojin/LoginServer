@@ -44,7 +44,7 @@ app.UseWhen(context => context.Request.Path.StartsWithSegments("/Main/TestJwt")
         applicationBuilder.UseMiddleware<JwtMiddleware>();
     });
 
-#region MyRegion
+#region ≤‚ ‘¥˙¬Î
 //var count = app.Services.GetRequiredService<ISqlSugarClient>().Queryable<userinfo>().Count();
 //Console.Write("");
 //app.Services.GetRequiredService<ISqlSugarClient>().DbFirst.IsCreateAttribute().CreateClassFile("E:\\Csharp\\LoginServer\\Models", "Models");
